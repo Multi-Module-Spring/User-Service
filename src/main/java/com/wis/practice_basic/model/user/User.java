@@ -2,7 +2,6 @@ package com.wis.practice_basic.model.user;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import com.wis.practice_basic.model.user.dto.response.Country;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,5 +28,4 @@ public class User {
     private Role role;
     private LocalDateTime updatedAt;
     private String isActive;
-    private Country country;
 }

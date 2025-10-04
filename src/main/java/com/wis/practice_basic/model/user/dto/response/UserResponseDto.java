@@ -28,5 +28,4 @@ public class UserResponseDto {
     @I18n(args = {"role","name"})
     private String isActive;
     private LocalDateTime updatedAt;
-    private Country country;
 }
