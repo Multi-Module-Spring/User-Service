@@ -1,5 +1,6 @@
 package com.wis.practice_basic.model.user.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.wis.annotation.I18n;
@@ -27,5 +28,6 @@ public class UserResponseDto {
     private String role;
     @I18n(args = {"role","name"})
     private String isActive;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
     private LocalDateTime updatedAt;
 }

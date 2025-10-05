@@ -1,5 +1,6 @@
 package com.wis.practice_basic.model.user;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.AllArgsConstructor;
@@ -26,6 +27,7 @@ public class User {
     private String phone;
     private int age;
     private Role role;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
     private LocalDateTime updatedAt;
     private String isActive;
 }

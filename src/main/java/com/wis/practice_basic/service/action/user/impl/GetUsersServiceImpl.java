@@ -29,10 +29,12 @@ public class GetUsersServiceImpl extends CoreActionService<UserGetRequestDto, Us
 
     @Override
     protected List<UserResponseDto> innerExecute(Payload payload, UserGetActionModel actionModel, LocalDateTime now) {
-        List<User> beforeMap = userRepository.getUsers();
+        List<User> users = userRepository.getUsers();
 
 
-        return mapper.mapList(beforeMap, UserResponseDto.class);
+        return users.stream()
+                .map(mapper.mapTo(UserResponseDto.class))
+                .toList();
     }
 
 }

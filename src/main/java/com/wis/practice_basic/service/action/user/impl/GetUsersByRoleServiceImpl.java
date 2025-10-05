@@ -34,7 +34,9 @@ public class GetUsersByRoleServiceImpl extends CoreActionService<UserGetRequestD
     protected List<UserResponseDto> innerExecute(Payload payload, UserGetActionModel userGetActionModel, LocalDateTime now) {
         List<User> beforeMap = userRepository.getUsersByRole(userGetActionModel);
 
-        return mapper.mapList(beforeMap, UserResponseDto.class);
+        return beforeMap.stream()
+                .map(mapper.mapTo(UserResponseDto.class))
+                .toList();
     }
 
 

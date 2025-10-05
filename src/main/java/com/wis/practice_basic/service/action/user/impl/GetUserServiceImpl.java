@@ -37,10 +37,11 @@ public class GetUserServiceImpl extends CoreActionService<UserGetRequestDto, Use
 
     @Override
     protected UserResponseDto innerExecute(Payload payload, UserGetActionModel actionModel, LocalDateTime now) {
+        log.info("Getting user by id: {}", actionModel.getId());
         User user = userRepository.getUser(actionModel);
         if (user == null) {
             throw ServiceException.of(HttpStatus.BAD_REQUEST, "USER_NOT_FOUND", List.of(actionModel.getId()));
         }
-        return mapper.map(user, UserResponseDto.class);
+        return mapper.mapTo(user, UserResponseDto.class);
     }
 }
