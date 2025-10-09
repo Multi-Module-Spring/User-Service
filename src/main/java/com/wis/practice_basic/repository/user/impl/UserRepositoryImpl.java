@@ -1,5 +1,8 @@
 package com.wis.practice_basic.repository.user.impl;
 
+import com.wis.practice_basic.model.user.Role;
+import com.wis.practice_basic.model.user.UserRole;
+import com.wis.practice_basic.model.user.dto.response.UserResponseDto;
 import com.wis.util.core_util.CoreRepository;
 import com.wis.util.core_util.number.impl.IntegerUtil;
 import com.wis.util.core_util.string.StringUtil;
@@ -18,15 +21,17 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserRepositoryImpl extends CoreRepository implements UserRepository {
     @Override
-    public List<User> getUsers() {
+    public List<UserResponseDto> getUsers() {
         SQLBuilder sqlBuilder = SQLBuilder.build()
                 .select(userTable,"u")
+                .select(userRoleTable,"r")
                 .from(userTable)
-                .orderBy(userTable,User.Fields.role);
+                .join(userRoleTable).on("u.id = r.user_id")
+                .orderBy(userRoleTable,UserRole.Fields.role);
 
         return dbPool.executeQuery(
                 sqlBuilder.getSql(),
-                userTable,
+                UserResponseDto.class,
                 sqlBuilder.getParams()
         );
     }
@@ -36,7 +41,8 @@ public class UserRepositoryImpl extends CoreRepository implements UserRepository
        SQLBuilder sqlBuilder = SQLBuilder.build()
                .select(userTable,"u")
                .from(userTable)
-               .where(userTable,User.Fields.role,userGetActionModel.getRole().name());
+               .join(userRoleTable).on("u.id = user_role.user_id")
+               .where(userRoleTable,UserRole.Fields.role,userGetActionModel.getRole().name());
 
         return dbPool.executeQuery(
                sqlBuilder.getSql(),
@@ -49,12 +55,14 @@ public class UserRepositoryImpl extends CoreRepository implements UserRepository
     public User getUser(UserGetActionModel actionModel) {
         SQLBuilder sqlBuilder = SQLBuilder.build()
                 .select(userTable,"u")
+                .select(userRoleTable,"r")
                 .from(userTable)
+                .join(userRoleTable).on("u.id = r.user_id")
                 .where(userTable,
                         User.Fields.id, actionModel.getId()
                 );
         if(actionModel.getRole() != null) {
-            sqlBuilder.and(User.Fields.role, actionModel.getRole().name());
+            sqlBuilder.and(userRoleTable,UserRole.Fields.role, actionModel.getRole().name());
         }
         return dbPool.executeQueryUnique(
                 sqlBuilder.getSql(),
