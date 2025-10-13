@@ -1,14 +1,13 @@
 package com.wis.practice_basic.api.controller;
 
-import com.wis.util.core_util.CoreAPI;
+import com.wis.common.util.core_util.CoreAPI;
 import com.wis.practice_basic.model.user.Role;
-import com.wis.configuration.Payload;
+import com.wis.common.configuration.Payload;
 import com.wis.practice_basic.model.user.dto.request.UserGetRequestDto;
 import com.wis.practice_basic.model.user.dto.response.UserResponseDto;
 import com.wis.practice_basic.model.user.dto.request.UserUpdateRequestDto;
 import com.wis.practice_basic.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

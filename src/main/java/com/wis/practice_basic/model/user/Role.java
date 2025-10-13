@@ -1,6 +1,6 @@
 package com.wis.practice_basic.model.user;
 
-import com.wis.exception.ServiceException;
+import com.wis.common.exception.ServiceException;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 

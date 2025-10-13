@@ -1,6 +1,6 @@
 package com.wis.practice_basic.service.impl;
 
-import com.wis.configuration.Payload;
+import com.wis.common.configuration.Payload;
 import com.wis.practice_basic.model.user.dto.request.UserGetRequestDto;
 import com.wis.practice_basic.model.user.dto.response.UserResponseDto;
 import com.wis.practice_basic.model.user.dto.request.UserUpdateRequestDto;

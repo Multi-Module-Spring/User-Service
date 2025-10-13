@@ -1,12 +1,11 @@
 package com.wis.practice_basic.repository.user.impl;
 
-import com.wis.practice_basic.model.user.Role;
 import com.wis.practice_basic.model.user.UserRole;
 import com.wis.practice_basic.model.user.dto.response.UserResponseDto;
-import com.wis.util.core_util.CoreRepository;
-import com.wis.util.core_util.number.impl.IntegerUtil;
-import com.wis.util.core_util.string.StringUtil;
-import com.wis.util.core_util.database.SQLBuilder;
+import com.wis.common.util.core_util.CoreRepository;
+import com.wis.common.util.core_util.number.impl.IntegerUtil;
+import com.wis.common.util.core_util.string.StringUtil;
+import com.wis.common.util.core_util.database.SQLBuilder;
 import com.wis.practice_basic.model.user.User;
 import com.wis.practice_basic.model.user.dto.action_model.UserGetActionModel;
 import com.wis.practice_basic.model.user.dto.action_model.UserUpdateActionModel;

@@ -1,6 +1,6 @@
 package com.wis.practice_basic.service.action.user.impl;
 
-import com.wis.configuration.Payload;
+import com.wis.common.configuration.Payload;
 import com.wis.practice_basic.model.user.Role;
 import com.wis.practice_basic.model.user.User;
 import com.wis.practice_basic.model.user.dto.action_model.UserGetActionModel;
@@ -8,7 +8,7 @@ import com.wis.practice_basic.model.user.dto.request.UserGetRequestDto;
 import com.wis.practice_basic.model.user.dto.response.UserResponseDto;
 import com.wis.practice_basic.repository.user.UserRepository;
 import com.wis.practice_basic.service.action.user.GetUsersByRoleService;
-import com.wis.executation.CoreActionService;
+import com.wis.common.executation.CoreActionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
