@@ -1,6 +1,7 @@
 package com.wis.practice_basic.service.action.user.impl;
 
 import com.wis.i18n.Translate;
+import com.wis.i18n.exception.TranslateException;
 import com.wis.practice_basic.model.user.Role;
 import com.wis.practice_basic.model.user.User;
 import com.wis.common.configuration.Payload;
@@ -41,7 +42,7 @@ public class GetUserServiceImpl extends CoreActionService<UserGetRequestDto, Use
         log.info("Getting user by id: {}", actionModel.getId());
         User user = userRepository.getUser(actionModel);
         if (user == null) {
-            throw ServiceException.of(HttpStatus.BAD_REQUEST, Translate.USER_NOT_FOUND.name(), List.of(actionModel.getId()));
+            throw new TranslateException(HttpStatus.BAD_REQUEST, Translate.USER_NOT_FOUND, List.of(actionModel.getId()));
         }
         return mapper.mapTo(user, UserResponseDto.class);
     }
