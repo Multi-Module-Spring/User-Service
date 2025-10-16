@@ -9,13 +9,13 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>PracticeBasic</artifactId>
+    <artifactId>User-Service</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>
         <dependency>
             <groupId>com.wis</groupId>
-            <artifactId>CoreCommon</artifactId>
+            <artifactId>Common</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>
