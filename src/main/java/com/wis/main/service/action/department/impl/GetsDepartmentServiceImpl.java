@@ -38,16 +38,20 @@ implements GetsDepartmentService {
     protected List<Department> innerExecute(Payload payload, DepartmentGetActionModel departmentGetActionModel, LocalDateTime now) {
         String name = stringUtil.nvl(departmentGetActionModel.getName());
         List<Department> departments = departmentRepository.getDepartments(departmentGetActionModel);
+        if(departments.isEmpty()) {
+            throw new TranslateException(HttpStatus.NOT_FOUND, Translate.DEPARTMENT_NOT_FOUND);
+        }
         if(!name.isEmpty()) {
             departments = departments.stream()
                     .filter(depart -> messageUtil.getI18n(depart.getDepartmentName())
                             .contains(name)
                     )
                     .toList();
+            if(departments.isEmpty()) {
+                throw new TranslateException(HttpStatus.NOT_FOUND, Translate.DEPARTMENTS_NOT_FOUND,name);
+            }
         }
-        if(departments.isEmpty()) {
-            throw new TranslateException(HttpStatus.NOT_FOUND, Translate.DEPARTMENTS_NOT_FOUND,name);
-        }
+
         return departments;
     }
 }
