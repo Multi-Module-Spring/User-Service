@@ -19,16 +19,14 @@ def main():
         f.write("import com.wis.i18n.Translate;\n")
         f.write("import com.wis.i18n.TranslateCommon;\n")
         f.write("import org.springframework.http.HttpStatus;\n")
-        f.write("import java.util.Arrays;\n\n")
-        f.write("import java.util.List;\n\n")
         f.write("public class TranslateException extends TranslateCommonException {\n\n")
 
         f.write("    public TranslateException(HttpStatus status, Translate translate) {\n")
-        f.write("        super(status, translate.name(), null);\n")
+        f.write("        super(status, translate.name(),(Object) null);\n")
         f.write("    }\n\n")
 
         f.write("    public TranslateException(HttpStatus status, TranslateCommon translate) {\n")
-        f.write("        super(status, translate.name(), null);\n")
+        f.write("        super(status, translate.name(),(Object) null);\n")
         f.write("    }\n\n")
 
         f.write("    public TranslateException(HttpStatus status, Translate translate, Object... args) {\n")
@@ -40,11 +38,11 @@ def main():
         f.write("    }\n\n")
 
         f.write("    public TranslateException(Translate translate) {\n")
-        f.write("        super(HttpStatus.BAD_REQUEST, translate.name(),null);\n")
+        f.write("        super(HttpStatus.BAD_REQUEST, translate.name(),(Object)null);\n")
         f.write("    }\n\n")
 
         f.write("    public TranslateException(TranslateCommon translate) {\n")
-        f.write("        super(HttpStatus.BAD_REQUEST, translate.name(),null);\n")
+        f.write("        super(HttpStatus.BAD_REQUEST, translate.name(),(Object)null);\n")
         f.write("    }\n\n")
 
         f.write("    public TranslateException(Translate translate, Object... args) {\n")
