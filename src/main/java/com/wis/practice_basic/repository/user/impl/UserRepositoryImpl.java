@@ -1,103 +1,126 @@
 package com.wis.practice_basic.repository.user.impl;
 
-import com.wis.practice_basic.model.user.UserRole;
-import com.wis.practice_basic.model.user.dto.response.UserResponseDto;
-import com.wis.common.util.core_util.CoreRepository;
-import com.wis.common.util.core_util.number.impl.IntegerUtil;
-import com.wis.common.util.core_util.string.StringUtil;
-import com.wis.common.util.core_util.database.SQLBuilder;
 import com.wis.practice_basic.model.user.User;
 import com.wis.practice_basic.model.user.dto.action_model.UserGetActionModel;
 import com.wis.practice_basic.model.user.dto.action_model.UserUpdateActionModel;
+import com.wis.practice_basic.model.user.dto.response.UserResponseDto;
 import com.wis.practice_basic.repository.user.UserRepository;
+import com.wis.common.util.core_util.CoreRepository;
+import com.wis.common.util.core_util.number.impl.IntegerUtil;
+import com.wis.common.util.core_util.string.StringUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.*;
 
 @Repository
 @RequiredArgsConstructor
 public class UserRepositoryImpl extends CoreRepository implements UserRepository {
+
     @Override
     public List<UserResponseDto> getUsers() {
-        SQLBuilder sqlBuilder = SQLBuilder.build()
-                .select(userTable,"u")
-                .select(userRoleTable,"r")
-                .from(userTable)
-                .join(userRoleTable).on("u.id = r.user_id")
-                .orderBy(userRoleTable,UserRole.Fields.role);
+        String sql = """
+            SELECT
+                u.id AS id,
+                u.name AS name,
+                u.email AS email,
+                u.phone AS phone,
+                u.age AS age,
+                r.role AS role
+            FROM "user" u
+            JOIN user_role r ON u.id = r.user_id
+            ORDER BY r.role
+        """;
 
-        return dbPool.executeQuery(
-                sqlBuilder.getSql(),
-                UserResponseDto.class,
-                sqlBuilder.getParams()
+        return dbPool.executeQuery(sql, UserResponseDto.class, Collections.emptyMap());
+    }
+
+    @Override
+    public List<User> getUsersByRole(UserGetActionModel model) {
+        String sql = """
+            SELECT
+                u.*
+            FROM "user" u
+            JOIN user_role r ON u.id = r.user_id
+            WHERE r.role = $1
+        """;
+        params.add(model.getRole().name());
+
+        return dbPool.executeQuery(sql, User.class, params.size());
+    }
+
+    @Override
+    public User getUser(UserGetActionModel model) {
+        StringBuilder sql = new StringBuilder("""
+            SELECT
+                u.*,
+                r.role AS role
+            FROM "user" u
+            JOIN user_role r ON u.id = r.user_id
+            WHERE u.id = $1
+        """);
+        params.add(model.getId());
+
+        if (model.getRole() != null) {
+            params.add(model.getRole().name());
+            sql.append(" AND r.role = $").append(params.size());
+        }
+
+        return dbPool.executeQueryUnique(sql.toString(), User.class, params);
+    }
+
+    @Override
+    public Boolean updateUser(UserUpdateActionModel model, LocalDateTime now) {
+        StringBuilder sql = new StringBuilder("UPDATE \"user\" SET ");
+        List<String> updates = new ArrayList<>();
+
+        if (!StringUtil.BLANK.equals(model.getName())) {
+            params.add(model.getName());
+            updates.add(
+                    "name = $" + params.size()
+            );
+
+        }
+
+        if (!StringUtil.BLANK.equals(model.getPassword())) {
+            params.add(model.getPassword());
+            updates.add(
+                    "password = $" + params.size()
+            );
+        }
+
+        if (!StringUtil.BLANK.equals(model.getPhone())) {
+            params.add(model.getPhone());
+            updates.add(
+                    "phone = $" + params.size()
+            );
+        }
+
+        if (!StringUtil.BLANK.equals(model.getEmail())) {
+            params.add(model.getEmail());
+            updates.add(
+                    "email = $" + params.size()
+                    );
+        }
+
+        if (model.getAge() != IntegerUtil.ZERO) {
+            params.add(model.getAge());
+            updates.add(
+                    "age = $" + params.size()
+            );
+        }
+
+        params.add(now);
+        updates.add(
+                "updated_at = $" + params.size()
         );
-    }
+        sql.append(String.join(", ", updates));
+        params.add(model.getId());
+        sql.append(
+                " WHERE id = $"
+        ).append(params.size());
 
-    @Override
-    public List<User> getUsersByRole(UserGetActionModel userGetActionModel) {
-       SQLBuilder sqlBuilder = SQLBuilder.build()
-               .select(userTable,"u")
-               .from(userTable)
-               .join(userRoleTable).on("u.id = user_role.user_id")
-               .where(userRoleTable,UserRole.Fields.role,userGetActionModel.getRole().name());
-
-        return dbPool.executeQuery(
-               sqlBuilder.getSql(),
-                userTable,
-               sqlBuilder.getParams()
-        );
-    }
-
-    @Override
-    public User getUser(UserGetActionModel actionModel) {
-        SQLBuilder sqlBuilder = SQLBuilder.build()
-                .select(userTable,"u")
-                .select(userRoleTable,"r")
-                .from(userTable)
-                .join(userRoleTable).on("u.id = r.user_id")
-                .where(userTable,
-                        User.Fields.id, actionModel.getId()
-                );
-        if(actionModel.getRole() != null) {
-            sqlBuilder.and(userRoleTable,UserRole.Fields.role, actionModel.getRole().name());
-        }
-        return dbPool.executeQueryUnique(
-                sqlBuilder.getSql(),
-                userTable,
-                sqlBuilder.getParams());
-    }
-
-    @Override
-    public Boolean updateUser(UserUpdateActionModel actionModel, LocalDateTime now) {
-        if(!actionModel.getName().equals(StringUtil.BLANK)) {
-            values().put(User.Fields.name, actionModel.getName());
-        }
-        if(!actionModel.getPassword().equals(StringUtil.BLANK)) {
-            values().put(User.Fields.password, actionModel.getPassword());
-        }
-
-        if(!actionModel.getPhone().equals(StringUtil.BLANK)) {
-            values().put(User.Fields.phone, actionModel.getPhone());
-        }
-        if(!actionModel.getEmail().equals(StringUtil.BLANK)) {
-            values().put(User.Fields.email, actionModel.getEmail());
-        }
-        if(actionModel.getAge() != IntegerUtil.ZERO) {
-            values().put(User.Fields.age, actionModel.getAge());
-        }
-
-        values().put(User.Fields.updatedAt, now);
-
-        SQLBuilder sqlBuilder = SQLBuilder.build()
-                .update(userTable,values())
-                .where(User.Fields.id, actionModel.getId());
-
-        return dbPool.executeUpdate(
-                sqlBuilder.getSql(),
-                userTable,
-                sqlBuilder.getParams()) >=1;
-
+        return dbPool.executeUpdate(sql.toString(),User.class, params) >= 1;
     }
 }
