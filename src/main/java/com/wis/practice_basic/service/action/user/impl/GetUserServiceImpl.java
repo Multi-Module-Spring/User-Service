@@ -41,7 +41,7 @@ public class GetUserServiceImpl extends CoreActionService<UserGetRequestDto, Use
         log.info("Getting user by id: {}", actionModel.getId());
         User user = userRepository.getUser(actionModel);
         if (user == null) {
-            throw new TranslateException(HttpStatus.BAD_REQUEST, Translate.USER_NOT_FOUND, List.of(actionModel.getId()));
+            throw new TranslateException(HttpStatus.BAD_REQUEST, Translate.USER_NOT_FOUND, actionModel.getId());
         }
         return mapper.mapTo(user, UserResponseDto.class);
     }
