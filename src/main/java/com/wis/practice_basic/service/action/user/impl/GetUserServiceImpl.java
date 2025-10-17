@@ -8,7 +8,6 @@ import com.wis.common.configuration.Payload;
 import com.wis.practice_basic.model.user.dto.action_model.UserGetActionModel;
 import com.wis.practice_basic.model.user.dto.request.UserGetRequestDto;
 import com.wis.practice_basic.model.user.dto.response.UserResponseDto;
-import com.wis.common.exception.ServiceException;
 import com.wis.practice_basic.repository.user.UserRepository;
 import com.wis.practice_basic.service.action.user.GetUserService;
 import com.wis.common.executation.CoreActionService;

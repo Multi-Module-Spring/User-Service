@@ -17,25 +17,41 @@ def main():
     with open(OUTPUT_PATH, "w", encoding="utf-8") as f:
         f.write(f"package {PACKAGE_NAME};\n\n")
         f.write("import com.wis.i18n.Translate;\n")
-        f.write("import com.wis.common.exception.ServiceException;\n")
+        f.write("import com.wis.i18n.TranslateCommon;\n")
         f.write("import org.springframework.http.HttpStatus;\n")
         f.write("import java.util.List;\n\n")
-        f.write("public class TranslateException extends ServiceException {\n\n")
+        f.write("public class TranslateException extends TranslateCommonException {\n\n")
 
         f.write("    public TranslateException(HttpStatus status, Translate translate) {\n")
-        f.write("        super(status, translate.name(), false, null, null);\n")
+        f.write("        super(status, translate.name(), null);\n")
+        f.write("    }\n\n")
+
+        f.write("    public TranslateException(HttpStatus status, TranslateCommon translate) {\n")
+        f.write("        super(status, translate.name(), null);\n")
         f.write("    }\n\n")
 
         f.write("    public TranslateException(HttpStatus status, Translate translate, List<Object> args) {\n")
-        f.write("        super(status, translate.name(), true, null, args);\n")
+        f.write("        super(status, translate.name(), args);\n")
+        f.write("    }\n\n")
+
+        f.write("    public TranslateException(HttpStatus status, TranslateCommon translate, List<Object> args) {\n")
+        f.write("        super(status, translate.name(), args);\n")
         f.write("    }\n\n")
 
         f.write("    public TranslateException(Translate translate) {\n")
-        f.write("        super(HttpStatus.BAD_REQUEST, translate.name(), false, null, null);\n")
+        f.write("        super(HttpStatus.BAD_REQUEST, translate.name(),null);\n")
+        f.write("    }\n\n")
+
+        f.write("    public TranslateException(TranslateCommon translate) {\n")
+        f.write("        super(HttpStatus.BAD_REQUEST, translate.name(),null);\n")
         f.write("    }\n\n")
 
         f.write("    public TranslateException(Translate translate, List<Object> args) {\n")
-        f.write("        super(HttpStatus.BAD_REQUEST, translate.name(), true, null, args);\n")
+        f.write("        super(HttpStatus.BAD_REQUEST, translate.name(), args);\n")
+        f.write("    }\n\n")
+
+        f.write("    public TranslateException(TranslateCommon translate, List<Object> args) {\n")
+        f.write("        super(HttpStatus.BAD_REQUEST, translate.name(), args);\n")
         f.write("    }\n\n")
 
         f.write("}\n")
