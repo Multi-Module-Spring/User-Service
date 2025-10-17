@@ -67,10 +67,8 @@
                         </goals>
                         <configuration>
                             <target>
-                                <!-- Create output directory -->
                                 <mkdir dir="${project.build.directory}/generator-classes"/>
 
-                                <!-- Compile generator -->
                                 <echo message="Compiling I18nCodeGenerator..."/>
                                 <javac srcdir="${project.basedir}/src/main/java"
                                        destdir="${project.build.directory}/generator-classes"
@@ -104,7 +102,6 @@
                                     </classpath>
                                 </javac>
 
-                                <!-- Run generator -->
                                 <echo message="Running I18nCodeGenerator..."/>
                                 <java classname="com.wis.generator.I18nCodeGenerator"
                                       fork="true"
