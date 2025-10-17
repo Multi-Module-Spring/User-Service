@@ -1,4 +1,4 @@
-package com.wis.main.api.controller;
+package com.wis.main.controller;
 
 import com.wis.main.util.core_util.CoreAPI;
 import com.wis.main.model.user.Role;
