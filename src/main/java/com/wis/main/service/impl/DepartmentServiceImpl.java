@@ -5,6 +5,7 @@ import com.wis.main.model.department.Department;
 import com.wis.main.model.department.dto.request.DepartmentGetRequestDto;
 import com.wis.main.service.DepartmentService;
 import com.wis.main.service.action.department.GetDepartmentService;
+import com.wis.main.service.action.department.GetsDepartmentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DepartmentServiceImpl implements DepartmentService {
     private final GetDepartmentService getDepartmentService;
+    private final GetsDepartmentService getsDepartmentService;
 
     @Override
     public Department getDepartmentById(Payload payload,int id) {
@@ -25,8 +27,12 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public List<Department> getAllDepartments(Payload payload) {
-        return List.of();
+    public List<Department> getAllDepartments(Payload payload,String name) {
+        return getsDepartmentService.execute(payload,
+                DepartmentGetRequestDto.builder()
+                        .name(name)
+                        .build()
+        );
     }
 
     @Override

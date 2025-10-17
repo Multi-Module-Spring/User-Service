@@ -7,6 +7,8 @@ import com.wis.main.repository.department.DepartmentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 
 @Repository
 @RequiredArgsConstructor
@@ -34,6 +36,23 @@ public class DepartmentRepositoryImpl extends CoreRepository implements Departme
         }
 
         return dbPool.executeQueryUnique(
+                sql.toString(),
+                Department.class,
+                params
+        );
+    }
+
+    @Override
+    public List<Department> getDepartments(DepartmentGetActionModel departmentGetActionModel) {
+        StringBuilder sql = new StringBuilder(
+                """
+                SELECT id, department_name,
+                code, parent_code FROM department
+                WHERE 1=1
+                """
+        );
+
+        return dbPool.executeQuery(
                 sql.toString(),
                 Department.class,
                 params

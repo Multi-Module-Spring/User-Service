@@ -5,10 +5,9 @@ import com.wis.main.util.core_util.CoreAPI;
 import com.wis.main.model.department.Department;
 import com.wis.main.service.DepartmentService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("department")
@@ -23,6 +22,12 @@ public class DepartmentController extends CoreAPI {
                 payload,
                 id
         );
+    }
+
+    @GetMapping("/search")
+    public List<Department> getDepartment(@RequestParam String name) {
+        Payload payload = payload(false);
+        return departmentService.getAllDepartments(payload,name);
     }
 
     @GetMapping("/code/{code}")

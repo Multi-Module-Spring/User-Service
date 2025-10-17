@@ -10,4 +10,5 @@ import lombok.experimental.SuperBuilder;
 public class DepartmentGetRequestDto {
     private int id;
     private String code;
+    private String name;
 }
