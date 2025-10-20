@@ -22,18 +22,39 @@ public class UserRepositoryImpl extends CoreRepository implements UserRepository
     public List<UserResponseDto> getUsers() {
         String sql = """
             SELECT
-                u.id AS id,
+                u.id as id,
                 u.name AS name,
                 u.email AS email,
                 u.phone AS phone,
                 u.age AS age,
-                r.role AS role
+                u.is_active AS is_active,
+                u.updated_at AS updated_at,
+                u.country AS country,
+                to_jsonb(json_agg(
+                    json_build_object(
+                        'id', d.id,
+                        'code', d.code,
+                        'departmentName', d.department_name,
+                        'role', r.role,
+                        'parentCode', d.parent_code
+                    )
+                )) AS department_list
             FROM "user" u
             JOIN user_role r ON u.id = r.user_id
-            ORDER BY r.role
+            JOIN department d ON r.department_code = d.code
+            GROUP BY
+              u.id,
+              u.name,
+              u.email,
+              u.phone,
+              u.age,
+              u.is_active,
+              u.updated_at,
+              u.country
+            ORDER BY u.name;
         """;
 
-        return dbPool.executeQuery(sql, UserResponseDto.class, Collections.emptyMap());
+        return dbPool.executeQuery(sql, UserResponseDto.class, params);
     }
 
     @Override
