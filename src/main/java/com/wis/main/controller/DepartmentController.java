@@ -1,6 +1,7 @@
 package com.wis.main.controller;
 
 import com.wis.main.configuration.Payload;
+import com.wis.main.model.department.dto.request.DepartmentAddRequestDto;
 import com.wis.main.util.core_util.CoreAPI;
 import com.wis.main.model.department.Department;
 import com.wis.main.service.DepartmentService;
@@ -36,6 +37,24 @@ public class DepartmentController extends CoreAPI {
         return departmentService.getDepartmentByCode(
                 payload,
                 code
+        );
+    }
+
+    @GetMapping("/code/{code}/parent")
+    public Department getParentDepartmentByCode(@PathVariable String code) {
+        Payload payload = payload(false);
+        return departmentService.getParentDepartmentByCode(
+                payload,
+                code
+        );
+    }
+
+    @PostMapping("")
+    public Department addDepartment(@RequestBody DepartmentAddRequestDto departmentAddRequestDto) {
+        Payload payload = payload(false);
+        return departmentService.addDepartment(
+                payload,
+                departmentAddRequestDto
         );
     }
 }

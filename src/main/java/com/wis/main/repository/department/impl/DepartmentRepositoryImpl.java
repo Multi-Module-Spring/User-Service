@@ -1,5 +1,7 @@
 package com.wis.main.repository.department.impl;
 
+import com.wis.main.model.department.dto.action_model.DepartmentAddActionModel;
+import com.wis.main.model.department.dto.action_model.DepartmentGetParentByCodeActionModel;
 import com.wis.main.util.core_util.CoreRepository;
 import com.wis.main.model.department.Department;
 import com.wis.main.model.department.dto.action_model.DepartmentGetActionModel;
@@ -54,6 +56,45 @@ public class DepartmentRepositoryImpl extends CoreRepository implements Departme
 
         return dbPool.executeQuery(
                 sql.toString(),
+                Department.class,
+                params
+        );
+    }
+
+    @Override
+    public Department addDepartment(DepartmentAddActionModel departmentAddActionModel) {
+        String sql = """
+                INSERT INTO department (department_name, code, parent_code)
+                VALUES ($1, $2, $3)
+                RETURNING id, department_name,
+                code, parent_code
+                """;
+        params.add(departmentAddActionModel.getCode());
+        params.add(departmentAddActionModel.getCode());
+        params.add(departmentAddActionModel.getParentCode());
+
+        return dbPool.executeQueryUnique(
+                sql,
+                Department.class,
+                params
+        );
+    }
+
+    @Override
+    public Department getParentDepartmentByCode(DepartmentGetParentByCodeActionModel departmentGetParentByCodeActionModel) {
+        String sql = """
+                SELECT id, department_name, code, parent_code
+                FROM department
+                WHERE code =
+                (
+                    SELECT parent_code FROM department
+                        WHERE code = $1
+                )
+                """;
+        params.add(departmentGetParentByCodeActionModel.getCode());
+
+        return dbPool.executeQueryUnique(
+                sql,
                 Department.class,
                 params
         );
