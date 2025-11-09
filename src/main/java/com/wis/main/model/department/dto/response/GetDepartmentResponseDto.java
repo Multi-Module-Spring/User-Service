@@ -19,6 +19,7 @@ import lombok.experimental.SuperBuilder;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class GetDepartmentResponseDto {
     private int id;
+    @I18n
     private String departmentName;
     private String code;
     private String parentCode;

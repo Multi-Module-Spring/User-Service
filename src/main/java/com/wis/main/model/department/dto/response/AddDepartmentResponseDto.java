@@ -10,6 +10,8 @@ import lombok.Setter;
 import lombok.experimental.FieldNameConstants;
 import lombok.experimental.SuperBuilder;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -19,7 +21,9 @@ import lombok.experimental.SuperBuilder;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class AddDepartmentResponseDto {
     private int id;
+    @I18n
     private String departmentName;
     private String code;
     private String parentCode;
+    private LocalDateTime createdAt;
 }

@@ -33,6 +33,6 @@ public class AddDepartmentServiceImpl extends CoreActionService<AddDepartmentReq
 
     @Override
     protected AddDepartmentResponseDto innerExecute(Payload payload, AddDepartmentActionModel departmentAddActionModel, LocalDateTime now) {
-        return departmentRepository.addDepartment(departmentAddActionModel);
+        return departmentRepository.addDepartment(departmentAddActionModel, now);
     }
 }

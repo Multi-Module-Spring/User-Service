@@ -12,6 +12,7 @@ import com.wis.main.repository.department.DepartmentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -52,7 +53,7 @@ public class DepartmentRepositoryImpl extends CoreRepository implements Departme
         StringBuilder sql = new StringBuilder(
                 """
                 SELECT id, department_name,
-                code, parent_code FROM department
+                code, parent_code,created_at FROM department
                 WHERE 1=1
                 """
         );
@@ -65,16 +66,17 @@ public class DepartmentRepositoryImpl extends CoreRepository implements Departme
     }
 
     @Override
-    public AddDepartmentResponseDto addDepartment(AddDepartmentActionModel departmentAddActionModel) {
+    public AddDepartmentResponseDto addDepartment(AddDepartmentActionModel departmentAddActionModel, LocalDateTime localDateTime) {
         String sql = """
-                INSERT INTO department (department_name, code, parent_code)
-                VALUES ($1, $2, $3)
+                INSERT INTO department (department_name, code, parent_code, created_at)
+                VALUES ($1, $2, $3,$4)
                 RETURNING id, department_name,
-                code, parent_code
+                code, parent_code, created_at
                 """;
         params.add(departmentAddActionModel.getCode());
         params.add(departmentAddActionModel.getCode());
         params.add(departmentAddActionModel.getParentCode());
+        params.add(localDateTime);
 
         return dbPool.executeQueryUnique(
                 sql,

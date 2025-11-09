@@ -8,6 +8,7 @@ import com.wis.main.model.department.dto.response.AddDepartmentResponseDto;
 import com.wis.main.model.department.dto.response.GetDepartmentResponseDto;
 import com.wis.main.model.department.dto.response.GetParentByCodeDepartmentResponseDto;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -16,7 +17,7 @@ public interface DepartmentRepository {
 
     List<Department> getDepartments(GetDepartmentActionModel departmentGetActionModel);
 
-    AddDepartmentResponseDto addDepartment(AddDepartmentActionModel departmentAddActionModel);
+    AddDepartmentResponseDto addDepartment(AddDepartmentActionModel departmentAddActionModel, LocalDateTime localDateTime);
 
     GetParentByCodeDepartmentResponseDto getParentDepartmentByCode(GetParentByCodeDepartmentActionModel departmentGetParentByCodeActionModel);
 }

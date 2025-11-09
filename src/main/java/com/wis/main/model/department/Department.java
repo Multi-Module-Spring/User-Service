@@ -10,6 +10,8 @@ import lombok.Setter;
 import lombok.experimental.FieldNameConstants;
 import lombok.experimental.SuperBuilder;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -23,4 +25,5 @@ public class Department {
     private String departmentName;
     private String code;
     private String parentCode;
+    private LocalDateTime createdAt;
 }
