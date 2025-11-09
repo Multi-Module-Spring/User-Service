@@ -1,4 +1,4 @@
-package com.wis.main.model.department;
+package com.wis.main.model.department.dto.response;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -19,8 +19,9 @@ import java.time.LocalDateTime;
 @SuperBuilder
 @FieldNameConstants
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class Department {
+public class GetDepartmentsResponseDto {
     private int id;
+    @I18n
     private String departmentName;
     private String code;
     private String parentCode;

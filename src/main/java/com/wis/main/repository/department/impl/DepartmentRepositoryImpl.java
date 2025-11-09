@@ -4,6 +4,7 @@ import com.wis.main.model.department.dto.action_model.AddDepartmentActionModel;
 import com.wis.main.model.department.dto.action_model.GetParentByCodeDepartmentActionModel;
 import com.wis.main.model.department.dto.response.AddDepartmentResponseDto;
 import com.wis.main.model.department.dto.response.GetDepartmentResponseDto;
+import com.wis.main.model.department.dto.response.GetDepartmentsResponseDto;
 import com.wis.main.model.department.dto.response.GetParentByCodeDepartmentResponseDto;
 import com.wis.main.util.core_util.CoreRepository;
 import com.wis.main.model.department.Department;
@@ -49,7 +50,7 @@ public class DepartmentRepositoryImpl extends CoreRepository implements Departme
     }
 
     @Override
-    public List<Department> getDepartments(GetDepartmentActionModel departmentGetActionModel) {
+    public List<GetDepartmentsResponseDto> getDepartments(GetDepartmentActionModel departmentGetActionModel) {
         StringBuilder sql = new StringBuilder(
                 """
                 SELECT id, department_name,
@@ -60,7 +61,7 @@ public class DepartmentRepositoryImpl extends CoreRepository implements Departme
 
         return dbPool.executeQuery(
                 sql.toString(),
-                Department.class,
+                GetDepartmentsResponseDto.class,
                 params
         );
     }

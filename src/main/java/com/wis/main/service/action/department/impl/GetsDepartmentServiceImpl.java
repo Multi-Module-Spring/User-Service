@@ -7,6 +7,7 @@ import com.wis.main.executation.CoreActionService;
 import com.wis.main.model.department.Department;
 import com.wis.main.model.department.dto.action_model.GetDepartmentActionModel;
 import com.wis.main.model.department.dto.request.GetDepartmentRequestDto;
+import com.wis.main.model.department.dto.response.GetDepartmentsResponseDto;
 import com.wis.main.repository.department.DepartmentRepository;
 import com.wis.main.service.action.department.GetsDepartmentService;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +23,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Component
 public class GetsDepartmentServiceImpl
-        extends CoreActionService<GetDepartmentRequestDto, GetDepartmentActionModel, List<Department>>
+        extends CoreActionService<GetDepartmentRequestDto, GetDepartmentActionModel, List<GetDepartmentsResponseDto>>
 implements GetsDepartmentService {
 
     protected final DepartmentRepository departmentRepository;
@@ -36,9 +37,9 @@ implements GetsDepartmentService {
     }
 
     @Override
-    protected List<Department> innerExecute(Payload payload, GetDepartmentActionModel departmentGetActionModel, LocalDateTime now) {
+    protected List<GetDepartmentsResponseDto> innerExecute(Payload payload, GetDepartmentActionModel departmentGetActionModel, LocalDateTime now) {
         String name = stringUtil.nvl(departmentGetActionModel.getName());
-        List<Department> departments = departmentRepository.getDepartments(departmentGetActionModel);
+        List<GetDepartmentsResponseDto> departments = departmentRepository.getDepartments(departmentGetActionModel);
         if(departments.isEmpty()) {
             throw new TranslateException(HttpStatus.NOT_FOUND, Translate.DEPARTMENT_NOT_FOUND);
         }

@@ -1,10 +1,9 @@
 package com.wis.main.service.action.department.impl;
 
-import com.wis.main.configuration.Payload;
-import com.wis.main.executation.CoreActionService;
 import com.wis.i18n.Translate;
 import com.wis.i18n.exception.TranslateException;
-import com.wis.main.model.department.Department;
+import com.wis.main.configuration.Payload;
+import com.wis.main.executation.CoreActionService;
 import com.wis.main.model.department.dto.action_model.GetDepartmentActionModel;
 import com.wis.main.model.department.dto.request.GetDepartmentRequestDto;
 import com.wis.main.model.department.dto.response.GetDepartmentResponseDto;
@@ -14,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 

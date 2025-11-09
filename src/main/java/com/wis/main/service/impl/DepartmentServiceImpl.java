@@ -36,11 +36,13 @@ public class DepartmentServiceImpl extends CoreBean implements DepartmentService
 
     @Override
     public List<Department> getAllDepartments(Payload payload,String name) {
-        return getsDepartmentService.execute(payload,
+        return mapper.mapToList(
+                getsDepartmentService.execute(payload,
                 GetDepartmentRequestDto.builder()
                         .name(name)
                         .build()
-        );
+                )
+                , Department.class);
     }
 
     @Override

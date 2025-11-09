@@ -2,7 +2,6 @@ package com.wis.main.service.action.department.impl;
 
 import com.wis.main.configuration.Payload;
 import com.wis.main.executation.CoreActionService;
-import com.wis.main.model.department.Department;
 import com.wis.main.model.department.dto.action_model.AddDepartmentActionModel;
 import com.wis.main.model.department.dto.request.AddDepartmentRequestDto;
 import com.wis.main.model.department.dto.response.AddDepartmentResponseDto;
@@ -11,7 +10,6 @@ import com.wis.main.service.action.department.AddDepartmentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
