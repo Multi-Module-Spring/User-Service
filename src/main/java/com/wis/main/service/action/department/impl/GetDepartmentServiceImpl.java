@@ -27,8 +27,8 @@ implements GetDepartmentService {
 
     @Override
     protected GetDepartmentActionModel verify(Payload payload, GetDepartmentRequestDto departmentGetRequestDto, LocalDateTime now) {
-        int id = integerUtil.nvl(departmentGetRequestDto.getId());
-        String code = stringUtil.nvl(departmentGetRequestDto.getCode());
+        int id = verifyNotNull(departmentGetRequestDto::getId);
+        String code = verifyNotNull(departmentGetRequestDto::getCode);
 
         if(id == 0 && stringUtil.isEmpty(code)) {
             throw new TranslateException(HttpStatus.NOT_FOUND, Translate.DEPARTMENT_NOT_FOUND);
