@@ -5,43 +5,45 @@ import com.wis.main.executation.CoreActionService;
 import com.wis.i18n.Translate;
 import com.wis.i18n.exception.TranslateException;
 import com.wis.main.model.department.Department;
-import com.wis.main.model.department.dto.action_model.DepartmentGetActionModel;
-import com.wis.main.model.department.dto.request.DepartmentGetRequestDto;
+import com.wis.main.model.department.dto.action_model.GetDepartmentActionModel;
+import com.wis.main.model.department.dto.request.GetDepartmentRequestDto;
+import com.wis.main.model.department.dto.response.GetDepartmentResponseDto;
 import com.wis.main.repository.department.DepartmentRepository;
 import com.wis.main.service.action.department.GetDepartmentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
 @Slf4j
 @RequiredArgsConstructor
-@Service
+@Component
 public class GetDepartmentServiceImpl
-        extends CoreActionService<DepartmentGetRequestDto, DepartmentGetActionModel, Department>
+        extends CoreActionService<GetDepartmentRequestDto, GetDepartmentActionModel, GetDepartmentResponseDto>
 implements GetDepartmentService {
 
     protected final DepartmentRepository departmentRepository;
 
     @Override
-    protected DepartmentGetActionModel verify(Payload payload, DepartmentGetRequestDto departmentGetRequestDto, LocalDateTime now) {
+    protected GetDepartmentActionModel verify(Payload payload, GetDepartmentRequestDto departmentGetRequestDto, LocalDateTime now) {
         int id = integerUtil.nvl(departmentGetRequestDto.getId());
         String code = stringUtil.nvl(departmentGetRequestDto.getCode());
 
         if(id == 0 && stringUtil.isEmpty(code)) {
             throw new TranslateException(HttpStatus.NOT_FOUND, Translate.DEPARTMENT_NOT_FOUND);
         }
-        return DepartmentGetActionModel.builder()
+        return GetDepartmentActionModel.builder()
                 .id(id)
                 .code(code)
                 .build();
     }
 
     @Override
-    protected Department innerExecute(Payload payload, DepartmentGetActionModel departmentGetActionModel, LocalDateTime now) {
-        Department department = departmentRepository.getDepartment(departmentGetActionModel);
+    protected GetDepartmentResponseDto innerExecute(Payload payload, GetDepartmentActionModel departmentGetActionModel, LocalDateTime now) {
+        GetDepartmentResponseDto department = departmentRepository.getDepartment(departmentGetActionModel);
         if(department == null) {
             throw new TranslateException(HttpStatus.NOT_FOUND, Translate.DEPARTMENT_NOT_FOUND);
         }

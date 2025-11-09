@@ -1,19 +1,22 @@
 package com.wis.main.repository.department;
 
 import com.wis.main.model.department.Department;
-import com.wis.main.model.department.dto.action_model.DepartmentAddActionModel;
-import com.wis.main.model.department.dto.action_model.DepartmentGetActionModel;
-import com.wis.main.model.department.dto.action_model.DepartmentGetParentByCodeActionModel;
+import com.wis.main.model.department.dto.action_model.AddDepartmentActionModel;
+import com.wis.main.model.department.dto.action_model.GetDepartmentActionModel;
+import com.wis.main.model.department.dto.action_model.GetParentByCodeDepartmentActionModel;
+import com.wis.main.model.department.dto.response.AddDepartmentResponseDto;
+import com.wis.main.model.department.dto.response.GetDepartmentResponseDto;
+import com.wis.main.model.department.dto.response.GetParentByCodeDepartmentResponseDto;
 
 import java.util.List;
 
 
 public interface DepartmentRepository {
-    Department getDepartment(DepartmentGetActionModel departmentGetActionModel);
+    GetDepartmentResponseDto getDepartment(GetDepartmentActionModel departmentGetActionModel);
 
-    List<Department> getDepartments(DepartmentGetActionModel departmentGetActionModel);
+    List<Department> getDepartments(GetDepartmentActionModel departmentGetActionModel);
 
-    Department addDepartment(DepartmentAddActionModel departmentAddActionModel);
+    AddDepartmentResponseDto addDepartment(AddDepartmentActionModel departmentAddActionModel);
 
-    Department getParentDepartmentByCode(DepartmentGetParentByCodeActionModel departmentGetParentByCodeActionModel);
+    GetParentByCodeDepartmentResponseDto getParentDepartmentByCode(GetParentByCodeDepartmentActionModel departmentGetParentByCodeActionModel);
 }

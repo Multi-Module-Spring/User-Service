@@ -4,41 +4,42 @@ import com.wis.i18n.Translate;
 import com.wis.i18n.exception.TranslateException;
 import com.wis.main.configuration.Payload;
 import com.wis.main.executation.CoreActionService;
-import com.wis.main.model.department.Department;
-import com.wis.main.model.department.dto.action_model.DepartmentGetParentByCodeActionModel;
-import com.wis.main.model.department.dto.request.DepartmentGetParentByCodeRequestDto;
+import com.wis.main.model.department.dto.action_model.GetParentByCodeDepartmentActionModel;
+import com.wis.main.model.department.dto.request.GetParentByCodeDepartmentRequestDto;
+import com.wis.main.model.department.dto.response.GetParentByCodeDepartmentResponseDto;
 import com.wis.main.repository.department.DepartmentRepository;
 import com.wis.main.service.action.department.GetParentDepartmentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
 @Slf4j
 @RequiredArgsConstructor
-@Service
+@Component
 public class GetParentDepartmentServiceImpl
         extends CoreActionService<
-        DepartmentGetParentByCodeRequestDto
-        , DepartmentGetParentByCodeActionModel
-        , Department
+        GetParentByCodeDepartmentRequestDto
+        , GetParentByCodeDepartmentActionModel
+        , GetParentByCodeDepartmentResponseDto
         > implements GetParentDepartmentService {
     private final DepartmentRepository departmentRepository;
 
     @Override
-    protected DepartmentGetParentByCodeActionModel verify(Payload payload, DepartmentGetParentByCodeRequestDto departmentGetParentByCodeRequestDto, LocalDateTime now) {
+    protected GetParentByCodeDepartmentActionModel verify(Payload payload, GetParentByCodeDepartmentRequestDto departmentGetParentByCodeRequestDto, LocalDateTime now) {
         String code = verifyNotNull(departmentGetParentByCodeRequestDto::getCode);
-        return DepartmentGetParentByCodeActionModel.builder()
+        return GetParentByCodeDepartmentActionModel.builder()
                 .code(code)
                 .build();
 
     }
 
     @Override
-    protected Department innerExecute(Payload payload, DepartmentGetParentByCodeActionModel departmentGetParentByCodeActionModel, LocalDateTime now) {
-        Department parentDepartment = departmentRepository
+    protected GetParentByCodeDepartmentResponseDto innerExecute(Payload payload, GetParentByCodeDepartmentActionModel departmentGetParentByCodeActionModel, LocalDateTime now) {
+        GetParentByCodeDepartmentResponseDto parentDepartment = departmentRepository
                 .getParentDepartmentByCode(
                         departmentGetParentByCodeActionModel
                 );

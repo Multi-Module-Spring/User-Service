@@ -7,8 +7,6 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @NoArgsConstructor
 @SuperBuilder
-public class DepartmentGetRequestDto {
-    private int id;
+public class GetParentByCodeDepartmentRequestDto {
     private String code;
-    private String name;
 }

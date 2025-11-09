@@ -2,14 +2,15 @@ package com.wis.main.service.impl;
 
 import com.wis.main.configuration.Payload;
 import com.wis.main.model.department.Department;
-import com.wis.main.model.department.dto.request.DepartmentAddRequestDto;
-import com.wis.main.model.department.dto.request.DepartmentGetParentByCodeRequestDto;
-import com.wis.main.model.department.dto.request.DepartmentGetRequestDto;
+import com.wis.main.model.department.dto.request.AddDepartmentRequestDto;
+import com.wis.main.model.department.dto.request.GetParentByCodeDepartmentRequestDto;
+import com.wis.main.model.department.dto.request.GetDepartmentRequestDto;
 import com.wis.main.service.DepartmentService;
 import com.wis.main.service.action.department.AddDepartmentService;
 import com.wis.main.service.action.department.GetDepartmentService;
 import com.wis.main.service.action.department.GetParentDepartmentService;
 import com.wis.main.service.action.department.GetsDepartmentService;
+import com.wis.main.util.core_util.CoreBean;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class DepartmentServiceImpl implements DepartmentService {
+public class DepartmentServiceImpl extends CoreBean implements DepartmentService {
     private final GetDepartmentService getDepartmentService;
     private final GetsDepartmentService getsDepartmentService;
     private final AddDepartmentService addDepartmentService;
@@ -25,25 +26,26 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public Department getDepartmentById(Payload payload,int id) {
-        return getDepartmentService.execute(payload, DepartmentGetRequestDto
+        return mapper.mapTo(
+                getDepartmentService.execute(payload, GetDepartmentRequestDto
                 .builder()
                 .id(id)
                 .build()
-        );
+                ), Department.class);
     }
 
     @Override
     public List<Department> getAllDepartments(Payload payload,String name) {
         return getsDepartmentService.execute(payload,
-                DepartmentGetRequestDto.builder()
+                GetDepartmentRequestDto.builder()
                         .name(name)
                         .build()
         );
     }
 
     @Override
-    public Department addDepartment(Payload payload, DepartmentAddRequestDto department) {
-        return addDepartmentService.execute(payload, department);
+    public Department addDepartment(Payload payload, AddDepartmentRequestDto department) {
+        return mapper.mapTo(addDepartmentService.execute(payload, department), Department.class);
     }
 
     @Override
@@ -58,19 +60,22 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public Department getDepartmentByCode(Payload payload,String code) {
-        return getDepartmentService.execute(payload, DepartmentGetRequestDto.
+        return mapper.mapTo(
+                getDepartmentService.execute(payload, GetDepartmentRequestDto.
                 builder()
                 .code(code)
                 .build()
-        );
+        ), Department.class);
     }
 
     @Override
     public Department getParentDepartmentByCode(Payload payload,String code) {
-        DepartmentGetParentByCodeRequestDto departmentGetParentByCodeRequestDto =
-                DepartmentGetParentByCodeRequestDto.builder()
+        GetParentByCodeDepartmentRequestDto departmentGetParentByCodeRequestDto =
+                GetParentByCodeDepartmentRequestDto.builder()
                 .code(code)
                 .build();
-        return getParentDepartmentService.execute(payload,departmentGetParentByCodeRequestDto);
+        return mapper.mapTo(
+                getParentDepartmentService.execute(payload,departmentGetParentByCodeRequestDto)
+                ,Department.class);
     }
 }

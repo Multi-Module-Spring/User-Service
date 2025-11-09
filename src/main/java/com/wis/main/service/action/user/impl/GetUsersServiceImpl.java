@@ -11,6 +11,7 @@ import com.wis.main.service.action.user.GetUsersService;
 import com.wis.main.executation.CoreActionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -19,7 +20,7 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
-@Service
+@Component
 public class GetUsersServiceImpl extends CoreActionService<UserGetRequestDto, UserGetActionModel, List<UserResponseDto>> implements GetUsersService {
     protected final UserRepository userRepository;
 

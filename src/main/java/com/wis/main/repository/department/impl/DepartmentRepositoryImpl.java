@@ -1,10 +1,13 @@
 package com.wis.main.repository.department.impl;
 
-import com.wis.main.model.department.dto.action_model.DepartmentAddActionModel;
-import com.wis.main.model.department.dto.action_model.DepartmentGetParentByCodeActionModel;
+import com.wis.main.model.department.dto.action_model.AddDepartmentActionModel;
+import com.wis.main.model.department.dto.action_model.GetParentByCodeDepartmentActionModel;
+import com.wis.main.model.department.dto.response.AddDepartmentResponseDto;
+import com.wis.main.model.department.dto.response.GetDepartmentResponseDto;
+import com.wis.main.model.department.dto.response.GetParentByCodeDepartmentResponseDto;
 import com.wis.main.util.core_util.CoreRepository;
 import com.wis.main.model.department.Department;
-import com.wis.main.model.department.dto.action_model.DepartmentGetActionModel;
+import com.wis.main.model.department.dto.action_model.GetDepartmentActionModel;
 import com.wis.main.repository.department.DepartmentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -16,7 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DepartmentRepositoryImpl extends CoreRepository implements DepartmentRepository {
     @Override
-    public Department getDepartment(DepartmentGetActionModel departmentGetActionModel) {
+    public GetDepartmentResponseDto getDepartment(GetDepartmentActionModel departmentGetActionModel) {
         StringBuilder sql = new StringBuilder(
                """
                SELECT id, department_name,
@@ -39,13 +42,13 @@ public class DepartmentRepositoryImpl extends CoreRepository implements Departme
 
         return dbPool.executeQueryUnique(
                 sql.toString(),
-                Department.class,
+                GetDepartmentResponseDto.class,
                 params
         );
     }
 
     @Override
-    public List<Department> getDepartments(DepartmentGetActionModel departmentGetActionModel) {
+    public List<Department> getDepartments(GetDepartmentActionModel departmentGetActionModel) {
         StringBuilder sql = new StringBuilder(
                 """
                 SELECT id, department_name,
@@ -62,7 +65,7 @@ public class DepartmentRepositoryImpl extends CoreRepository implements Departme
     }
 
     @Override
-    public Department addDepartment(DepartmentAddActionModel departmentAddActionModel) {
+    public AddDepartmentResponseDto addDepartment(AddDepartmentActionModel departmentAddActionModel) {
         String sql = """
                 INSERT INTO department (department_name, code, parent_code)
                 VALUES ($1, $2, $3)
@@ -75,13 +78,13 @@ public class DepartmentRepositoryImpl extends CoreRepository implements Departme
 
         return dbPool.executeQueryUnique(
                 sql,
-                Department.class,
+                AddDepartmentResponseDto.class,
                 params
         );
     }
 
     @Override
-    public Department getParentDepartmentByCode(DepartmentGetParentByCodeActionModel departmentGetParentByCodeActionModel) {
+    public GetParentByCodeDepartmentResponseDto getParentDepartmentByCode(GetParentByCodeDepartmentActionModel departmentGetParentByCodeActionModel) {
         String sql = """
                 SELECT id, department_name, code, parent_code
                 FROM department
@@ -95,7 +98,7 @@ public class DepartmentRepositoryImpl extends CoreRepository implements Departme
 
         return dbPool.executeQueryUnique(
                 sql,
-                Department.class,
+                GetParentByCodeDepartmentResponseDto.class,
                 params
         );
     }

@@ -14,13 +14,14 @@ import com.wis.main.executation.CoreActionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
 @Slf4j
 @RequiredArgsConstructor
-@Service
+@Component
 public class GetUserServiceImpl extends CoreActionService<UserGetRequestDto, UserGetActionModel, UserResponseDto> implements GetUserService {
 
     protected final UserRepository userRepository;

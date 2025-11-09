@@ -7,6 +7,6 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @NoArgsConstructor
 @SuperBuilder
-public class DepartmentGetParentByCodeActionModel {
+public class GetParentByCodeDepartmentActionModel {
     private String code;
 }

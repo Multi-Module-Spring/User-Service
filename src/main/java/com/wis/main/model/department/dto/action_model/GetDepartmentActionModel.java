@@ -7,7 +7,8 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @NoArgsConstructor
 @SuperBuilder
-public class DepartmentAddActionModel {
+public class GetDepartmentActionModel {
+    private int id;
     private String code;
-    private String parentCode;
+    private String name;
 }
