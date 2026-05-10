@@ -18,7 +18,7 @@ public class DepartmentController extends CoreAPI {
 
     @GetMapping("/{id}")
     public Department getDepartment(@PathVariable Integer id) {
-        Payload payload = payload(false);
+        Payload payload = payload(true);
         return departmentService.getDepartmentById(
                 payload,
                 id

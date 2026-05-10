@@ -1,4 +1,4 @@
-package com.wis.main.service.action.department.impl;
+package com.wis.main.service.action.department.impl.getDepartmentService.factory.impl;
 
 import com.wis.i18n.Translate;
 import com.wis.i18n.exception.TranslateException;
@@ -8,20 +8,21 @@ import com.wis.main.model.department.dto.action_model.GetDepartmentActionModel;
 import com.wis.main.model.department.dto.request.GetDepartmentRequestDto;
 import com.wis.main.model.department.dto.response.GetDepartmentResponseDto;
 import com.wis.main.repository.department.DepartmentRepository;
-import com.wis.main.service.action.department.GetDepartmentService;
+import com.wis.main.service.action.department.impl.getDepartmentService.GetDepartmentService;
+import com.wis.main.util.core_util.factory.FactoryType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
 @Slf4j
 @RequiredArgsConstructor
-@Component
-public class GetDepartmentServiceImpl
-        extends CoreActionService<GetDepartmentRequestDto, GetDepartmentActionModel, GetDepartmentResponseDto>
-implements GetDepartmentService {
+@Service
+@FactoryType("1")
+public class GetDepartmentServiceMMImpl extends CoreActionService<GetDepartmentRequestDto, GetDepartmentActionModel, GetDepartmentResponseDto>
+        implements GetDepartmentService {
 
     protected final DepartmentRepository departmentRepository;
 
@@ -47,4 +48,6 @@ implements GetDepartmentService {
         }
         return department;
     }
+
+
 }

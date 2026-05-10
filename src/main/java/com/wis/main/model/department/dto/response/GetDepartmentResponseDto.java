@@ -10,6 +10,8 @@ import lombok.Setter;
 import lombok.experimental.FieldNameConstants;
 import lombok.experimental.SuperBuilder;
 
+import java.math.BigDecimal;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -22,5 +24,6 @@ public class GetDepartmentResponseDto {
     @I18n
     private String departmentName;
     private String code;
+    private BigDecimal totalFees;
     private String parentCode;
 }
