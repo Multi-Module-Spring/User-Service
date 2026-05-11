@@ -7,11 +7,11 @@ import com.wis.main.model.department.dto.request.GetParentByCodeDepartmentReques
 import com.wis.main.model.department.dto.request.GetDepartmentRequestDto;
 import com.wis.main.service.DepartmentService;
 import com.wis.main.service.action.department.AddDepartmentService;
-import com.wis.main.service.action.department.impl.getDepartmentService.GetDepartmentService;
 import com.wis.main.service.action.department.GetParentDepartmentService;
 import com.wis.main.service.action.department.GetsDepartmentService;
-import com.wis.main.service.action.department.impl.getDepartmentService.factory.GetDepartmentFactory;
+import com.wis.main.service.action.department.impl.getDepartmentService.GetDepartmentService;
 import com.wis.main.util.core_util.CoreBean;
+import com.wis.main.util.core_util.factory.manager.FactoryManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +20,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class DepartmentServiceImpl extends CoreBean implements DepartmentService {
-    private final GetDepartmentFactory getDepartmentFactory;
+    private final FactoryManager factoryManager;
     private final GetsDepartmentService getsDepartmentService;
     private final AddDepartmentService addDepartmentService;
     private final GetParentDepartmentService getParentDepartmentService;
@@ -28,7 +28,9 @@ public class DepartmentServiceImpl extends CoreBean implements DepartmentService
     @Override
     public Department getDepartmentById(Payload payload,int id) {
         return mapper.mapTo(
-                getDepartmentFactory.get(payload.getTenantId())
+                factoryManager
+                        .build(GetDepartmentService.class)
+                        .with(payload.getTenantId())
                         .execute(payload, GetDepartmentRequestDto
                                         .builder()
                                         .id(id)
@@ -65,11 +67,15 @@ public class DepartmentServiceImpl extends CoreBean implements DepartmentService
     @Override
     public Department getDepartmentByCode(Payload payload,String code) {
         return mapper.mapTo(
-                getDepartmentFactory.get(payload.getTenantId()).execute(payload, GetDepartmentRequestDto.
-                builder()
-                .code(code)
-                .build()
-        ), Department.class);
+                factoryManager
+                        .build(GetDepartmentService.class)
+                        .with(payload.getTenantId())
+                        .execute(payload,
+                                GetDepartmentRequestDto.
+                                        builder()
+                                        .code(code)
+                                        .build()
+                        ), Department.class);
     }
 
     @Override
